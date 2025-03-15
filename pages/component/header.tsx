@@ -2,15 +2,21 @@ import React from "react";
 import { LuPlus } from "react-icons/lu";
 import { PiTelevisionDuotone } from "react-icons/pi";
 import { MdArrowBackIos } from "react-icons/md";
+import { useRouter } from "next/router";
 
 export const Header = () => {
-   
+   const router = useRouter()
+
+   const handleBack = () => {
+    router.push('/')
+
+   }
     return(
         <nav className="navbar ">
         <div className="container flex justify-between items-center px-10">
           <div className='icon-head w-[40px] h-[40px] border-2-[#89c5f1]  bg-[#89c5f1] flex justify-center items-center rounded-[20%] overflow-hidden'>
               
-          <MdArrowBackIos className='' />
+          <MdArrowBackIos className='' onClick={handleBack}/>
          
           </div>
         

@@ -15,7 +15,7 @@ interface Movie {
     vote_average: number,
     genres: string[]; 
 }
-export default function MovieCard (){
+export default function MovieCardSeries (){
     const [movie, setMovie] = useState<Movie>()
    const [wishlist, setWishlist] = useState<number[]>([]); 
 
@@ -24,7 +24,7 @@ export default function MovieCard (){
     useEffect(() => {
         const getMovie = async () => {
             try{
-                const res = await fetch("/api/card");
+                const res = await fetch("/api/series");
                 const data = await res.json()
                 setMovie(data)
                 console.log(data.genres)
@@ -53,7 +53,7 @@ export default function MovieCard (){
     return(
         <section className="bg-black">
             <div className="p-10">
-            <h1 className="text-white flex items-start mb-10 font-semibold">Popular Movies</h1>
+            <h1 className="text-white flex items-start mb-10 font-semibold">Series</h1>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 ">
           {movie.map((movie:Movie) => (
             <div key={movie.id} className=" rounded-lg overflow-hidden relative">
@@ -83,7 +83,7 @@ export default function MovieCard (){
               <Link href={`/${movie.id}`}>
                 <h6 className="text-sm mb-2 text-white">{movie.title}</h6>
                 </Link>
-                <div className="flex absolute bottom-25 right-2">
+                <div className="flex absolute bottom-10 right-2">
                   <p className="text-yellow-600 text-lg font-bold relative ">
                  {movie.vote_average.toFixed(1)}
                   </p>
