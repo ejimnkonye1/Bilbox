@@ -52,7 +52,7 @@ export default function MovieCardSeries (){
 
     return(
         <section className="bg-black">
-            <div className="p-10">
+            <div className="p-5 pl-[270px]">
             <h1 className="text-white flex items-start mb-10 font-semibold">Series</h1>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 ">
           {movie.map((movie:Movie) => (
