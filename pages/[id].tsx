@@ -43,7 +43,7 @@ export default function MovieDetails () {
     const date = new Date(releaseDate)
     const year = date.getFullYear()
     const hours = Math.floor(movie.runtime || 120 / 60); // Fallback to 120 minutes if runtime is undefined
-    const minutes = (movie.runtime || 120) % 60; // Fallback to 120 minutes if runtime is undefined
+    const minutes = (movie.runtime || 130) % 60; // Fallback to 
     const formattedRuntime = `${hours} hour ${minutes} minutes`;
 
     return(
