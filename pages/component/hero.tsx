@@ -1,9 +1,9 @@
 
-import { Header } from './header'
 
 import { IoIosStar } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
 import { useEffect, useState } from 'react';
+import Header from "./header";
 
 
 interface Movie {

@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { IoIosStar } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
-import { Header } from "./component/header";
+import Header from "./component/header";
 
 
 interface Movie {

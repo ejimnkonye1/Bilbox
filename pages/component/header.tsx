@@ -4,7 +4,7 @@ import { PiTelevisionDuotone } from "react-icons/pi";
 import { MdArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/router";
 
-export const Header = () => {
+export default function Header () {
    const router = useRouter()
 
    const handleBack = () => {
