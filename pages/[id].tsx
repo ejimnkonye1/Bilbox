@@ -1,4 +1,4 @@
-import { useParams } from "next/navigation"
+
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { IoIosStar } from "react-icons/io";

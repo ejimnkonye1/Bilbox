@@ -15,7 +15,10 @@ interface Movie {
     vote_average: number,
     genres: string[]; 
 }
-export default function MovieCardSeries (){
+type props = {
+    isSidebarOpen : boolean,
+}
+export default function MovieCardSeries ({isSidebarOpen}:props){
     const [movie, setMovie] = useState<Movie>()
    const [wishlist, setWishlist] = useState<number[]>([]); 
 
@@ -52,9 +55,9 @@ export default function MovieCardSeries (){
 
     return(
         <section className="bg-black">
-            <div className="p-5 pl-[270px]">
+                    <div className={`p-5 ${isSidebarOpen ? 'pl-[230px]':'pl-10'} `}>
             <h1 className="text-white flex items-start mb-10 font-semibold">Series</h1>
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 ">
+            <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 ">
           {movie.map((movie:Movie) => (
             <div key={movie.id} className=" rounded-lg overflow-hidden relative">
             
@@ -63,7 +66,7 @@ export default function MovieCardSeries (){
                 alt={movie.title}
                 width={500}
                 height={750}
-                className="w-full h-64 object-cover"
+                className="w-full h-40 md:h-56 lg:h-64 object-cover"
               />
   
         
