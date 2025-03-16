@@ -20,7 +20,7 @@ export default function Home() {
                 </div>
                 {/* Conditionally render the Sidebar */}
                 {isSidebarOpen && (
-                    <div className="lg:pt-30 pt-40">
+                    <div className="pt-30">
                         <Sidebar />
                     </div>
                 )}

@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 
 import { Header } from './header'
 
@@ -47,9 +45,9 @@ export  default function Hero(){
     const rating = Math.round(movie.vote_average / 10 * 10) * 1;
     const date = new Date(releaseDate)
     const year = date.getFullYear()
-    const runtime = movie.runtime;
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
+    // const runtime = movie.runtime;
+    const hours = Math.floor(400 / 60);
+    const minutes = 400 % 60;
     const formattedRuntime = `${hours || 2} hour ${minutes || 30}  minutes`;
 return(
     <section>
