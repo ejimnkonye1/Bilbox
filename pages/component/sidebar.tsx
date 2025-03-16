@@ -17,7 +17,7 @@ export default function Sidebar() {
                 <li className="w-full">
                     <Link
                         className="text-white flex items-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-all duration-300"
-                        href={''}
+                        href={'/'}
                     >
                         <FaHome size={24} className="text-white mr-3" />
                         <span className="text-md font-medium">Home</span>
@@ -28,7 +28,7 @@ export default function Sidebar() {
                 <li className="w-full">
                     <Link
                         className="text-gray-400 flex items-center p-3 rounded-lg hover:bg-gray-800 transition-all duration-300"
-                        href={''}
+                        href={'tv-show'}
                     >
                         <FaTv size={24} className="text-gray-400 mr-3" />
                         <span className="text-md">TV Show</span>
@@ -37,7 +37,7 @@ export default function Sidebar() {
                 <li className="w-full">
                     <Link
                         className="text-gray-400 flex items-center p-3 rounded-lg hover:bg-gray-800 transition-all duration-300"
-                        href={''}
+                        href={'/movies'}
                     >
                         <FaFilm size={24} className="text-gray-400 mr-3" />
                         <span className="text-md">Movies</span>
@@ -64,8 +64,8 @@ export default function Sidebar() {
             </ul>
 
             {/* Footer Section */}
-            <div className="absolute bottom-10 left-8 right-8">
-    <ul className="flex flex-row flex-wrap gap-4"> {/* Use gap-4 for consistent spacing */}
+            <div className="absolute bottom-10 left-2 right-8">
+    <ul className="flex flex-row flex-wrap gap-1"> {/* Use gap-4 for consistent spacing */}
         {/* Each item takes 50% width */}
         <li className="w-[calc(50%-0.5rem)]"> {/* Adjust width and gap */}
             <Link
