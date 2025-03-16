@@ -28,7 +28,7 @@ export default function MovieDetails () {
             if(id){
                 const res = await fetch("/api/card")
                 const data = await res.json()
-                const foundmovie = data.find((m) => m.id.toString() === id)
+                const foundmovie = data.find((m: Movie) => m.id.toString() === id);
                 setmovie(foundmovie)
                 setReleaseDate(foundmovie.release_date)
                 setGenres(foundmovie.genres || ['action', 'sci fi']);
@@ -42,10 +42,10 @@ export default function MovieDetails () {
     const rating = Math.round(movie.vote_average / 10 * 10) * 1;
     const date = new Date(releaseDate)
     const year = date.getFullYear()
-    const runtime = movie.runtime;
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
-    const formattedRuntime = `${hours || 2} hour ${minutes || 30}  minutes`;
+    const hours = Math.floor(movie.runtime || 120 / 60); // Fallback to 120 minutes if runtime is undefined
+    const minutes = (movie.runtime || 120) % 60; // Fallback to 120 minutes if runtime is undefined
+    const formattedRuntime = `${hours} hour ${minutes} minutes`;
+
     return(
       <section>
           
