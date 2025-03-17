@@ -1,9 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import img from '../images/ii.png';
 import Image from "next/image";
 import { FaDownload, FaHistory, FaSearch } from "react-icons/fa";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
 
-export default function Navbar({ isSidebarOpen, setIsSidebarOpen }) {
+type Props = {
+    isSidebarOpen: boolean;
+    setIsSidebarOpen: (isopen:boolean) => void
+  };
+type User = {
+    id: string;
+    email: string;
+  };
+export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
+
+    const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser({
+          id: currentUser.uid,
+          email: currentUser.email || "",
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
     return (
         <>
             {/* Main Navbar */}
@@ -67,11 +94,18 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }) {
                     <button className="lg:hidden text-white">
                         <FaHistory size={24} />
                     </button>
-
-                    {/* Download App Button (Visible on Larger Screens) */}
-                    <button className="hidden lg:block bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition duration-300">
-                        Login
-                    </button>
+     
+                 {user ?  
+                     <button className="hidden lg:block bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition duration-300">
+                       
+                     Logout
+                 </button> :
+                     <button className="hidden lg:block bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition duration-300">
+                       
+                     Login
+                 </button>
+                }
+                    
 
                     {/* Watch History Button (Visible on Larger Screens) */}
                     <button className="hidden lg:block bg-transparent border border-white text-white px-4 py-2 rounded-full hover:bg-white hover:text-black transition duration-300">

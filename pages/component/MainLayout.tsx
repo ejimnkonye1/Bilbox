@@ -31,7 +31,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
 
   return (
-    <div className="bg-black">
+    <div className="">
       <Navbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
       <div className="flex justify-between">
         <div className="flex-grow pt-20">{childrenWithProps}</div>

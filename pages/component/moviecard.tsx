@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { auth, firestore } from "@/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -8,6 +7,7 @@ import Link from "next/link";
 
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import MovieSkeleton from "../reuseable/skeleton";
 
 interface Movie {
   id: number;
@@ -33,7 +33,7 @@ export default function MovieCard({ isSidebarOpen }: Props) {
   const [movies, setMovies] = useState<Movie[]>([]); // Fixed state to be an array
   const [wishlist, setWishlist] = useState<Movie[]>([]);
   const [user, setUser] = useState<User | null>(null);
-
+  const [isLoading, setIsLoading] = useState(true);
   // Handle Firebase Authentication
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -56,18 +56,19 @@ export default function MovieCard({ isSidebarOpen }: Props) {
       try {
         const res = await fetch("/api/card");
         const data = await res.json();
-        setMovies(data); // Ensure it's an array
+        setTimeout(() => {
+          setMovies(data);
+          setIsLoading(false); // Hide loading after 5 seconds
+        }, 5000);
       } catch (error) {
         console.error("Failed to get movies", error);
+        setIsLoading(false); 
       }
     };
 
     getMovies();
   }, []);
 
-  if (!movies.length) {
-    return <div className="text-white">Loading...</div>;
-  }
 
   const addToWishlist = async (selectedMovie: Movie) => {
     if (!user) {
@@ -108,6 +109,9 @@ export default function MovieCard({ isSidebarOpen }: Props) {
         <h1 className="text-white flex items-start mb-10 font-semibold">
           Popular Movies {user?.email}
         </h1>
+        {isLoading ? (
+          <MovieSkeleton  />
+        ) : (
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 ">
           {movies.map((movie) => (
             <div key={movie.id} className="rounded-lg overflow-hidden relative">
@@ -144,6 +148,7 @@ export default function MovieCard({ isSidebarOpen }: Props) {
             </div>
           ))}
         </div>
+           )}
       </div>
     </section>
   );

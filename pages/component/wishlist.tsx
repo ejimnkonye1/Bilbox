@@ -6,6 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 import Image from "next/image"; // Import Next.js Image component
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, firestore } from "@/firebase";
+import MovieSkeleton from "../reuseable/skeleton";
 
 interface Movie {
   id: number;
@@ -66,16 +67,29 @@ export default function Wishlist  ({isSidebarOpen}:props)  {
     fetchWishlist();
   }, [user]);
 
-  if (loading) return <p className="text-center text-lg">Loading...</p>;
-  if (!user) return <p className="text-center text-lg">Please log in to view your wishlist</p>;
+
+  if (!user) {
+    return (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-[#0a0a0a] p-6 rounded-lg shadow-lg text-center">
+                <p className="text-white text-lg">Please log in to view your wishlist</p>
+            </div>
+        </div>
+    );
+}
 
   return (
-    <section className="">
-<div className={`p-5 ${isSidebarOpen ? 'lg:pl-[230px]' : 'pl-10'}`} >
-      <h2 className="text-2xl font-bold mb-4">Your Wishlist</h2>
+    <section className="px-4">
+<div className={`p-5 ${isSidebarOpen ? 'lg:pl-[230px]' : 'pl-14'}`} >
+      <h2 className="text-lg text-white text-center font-bold mb-4">Your Wishlist</h2>
+           {loading ? (
+                <MovieSkeleton />
+              ) : (
+      <>
       {wishlist.length === 0 ? (
         <p>No movies in wishlist</p>
       ) : (
+        
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 ">
           {wishlist.map((movie) => (
             <div key={movie.id} className=" shadow-md rounded-lg relative">
@@ -101,6 +115,8 @@ export default function Wishlist  ({isSidebarOpen}:props)  {
           ))}
         </div>
       )}
+      </>
+    )}
     </div>
     </section>
     
