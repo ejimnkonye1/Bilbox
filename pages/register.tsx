@@ -1,54 +1,9 @@
-import { auth, firestore } from '@/firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { FaEnvelope, FaLock, FaGoogle, } from 'react-icons/fa';
-// const [showPassword, setShowPassword] = useState(false);
-//   const [email, SetEmail] = useState('')
-//   const [password, SetPassword] = useState('')
-//   const [btnloading, setbtnloading] = useState()
-
-
-
-
-export default function Login() {
-    const [error, SetError] = useState<string>('')
-    const router = useRouter();
-    const GoggleRegister = async () => {
-        const provider = new GoogleAuthProvider();
-        try {
-          const userCredential = await signInWithPopup(auth, provider);
-          const user = userCredential.user;
-          const userId = user.uid;
-      
-         
-          const userDocRef = doc(firestore, "users", userId); 
-          const userDoc = await getDoc(userDocRef); 
-      
-          if (!userDoc.exists()) {
-    
-            await setDoc(userDocRef, {
-              email: user.email,
-              userId,
-            });
-            console.log("User  data saved to Firestore");
-          } else {
-            console.log("User  already exists in Firestore");
-          }
-      
-          
-          router.push('/');
-        } catch (error) {
-          SetError("An error occurred during sign-in. Please try again.", error);
-          console.error("Error signing in:", error);
-        }
-      };
+export default function Register() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-black">
         <div className="flex flex-col gap-2.5 bg-[#1f1f1f] p-7 w-[450px] rounded-2xl font-sans">
             {/* Email Input */}
-            {error && <p>{error.message}</p>}
             <div className="flex flex-col">
                 <label className="text-white font-semibold">Email</label>
             </div>
@@ -101,11 +56,20 @@ export default function Login() {
             {/* Divider */}
             <p className="text-center text-white text-sm mt-2.5">Or</p>
 
-        
+            {/* Social Buttons */}
+            {/* <div className="flex gap-2.5">
+                
+                <button className="flex justify-center items-center gap-2.5 w-full h-12 rounded-lg border border-[#333] bg-[#2b2b2b] text-white font-medium cursor-pointer transition-all duration-200 hover:border-[#2d79f3] ">
+                    <FaGoogle className="text-white" size={20} />
+                    Google
+                </button>
+                <button className="flex justify-center items-center gap-2.5 w-full h-12 rounded-lg border border-[#333] bg-[#2b2b2b] text-white font-medium cursor-pointer transition-all duration-200 hover:border-[#2d79f3]">
+                    <FaApple className="text-white" size={20} />
+                    Apple
+                </button>
+            </div> */}
             <div className="flex gap-2.5">
-            <button
-            onClick={GoggleRegister}
-            className="flex justify-center items-center gap-2.5 w-full h-12 rounded-lg border border-[#333] bg-[#2b2b2b] text-white font-medium cursor-pointer transition-all duration-200 hover:border-[#2d79f3]">
+            <button className="flex justify-center items-center gap-2.5 w-full h-12 rounded-lg border border-[#333] bg-[#2b2b2b] text-white font-medium cursor-pointer transition-all duration-200 hover:border-[#2d79f3]">
             <FaGoogle size={20} />
             Continue with Google
         </button>
