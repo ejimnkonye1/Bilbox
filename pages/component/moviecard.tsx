@@ -74,7 +74,7 @@ export default function MovieCard({ isSidebarOpen }: Props) {
       alert("Log in to add movie to wishlist");
       return;
     }
-    const movieRef = doc(collection(firestore, "wishlist"), `${user.id}`); 
+    const movieRef = doc(collection(firestore, "wishlist", user.id, "movies"), `${selectedMovie.id}`); 
 
     //check if movie is already in wishlist
  const alreadyWhishlist = wishlist.some((item) => item.id === selectedMovie.id )
