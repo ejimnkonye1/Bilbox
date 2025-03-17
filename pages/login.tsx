@@ -2,7 +2,7 @@ import { auth, firestore } from '@/firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { FaEnvelope, FaLock, FaGoogle, } from 'react-icons/fa';
 // const [showPassword, setShowPassword] = useState(false);
 //   const [email, SetEmail] = useState('')
@@ -11,12 +11,12 @@ import { FaEnvelope, FaLock, FaGoogle, } from 'react-icons/fa';
 
 
 
-interface ErrorPros  {
-    message: string;
-}
+// interface ErrorPros  {
+//     message: string;
+// }
 export default function Login() {
 
-    const [error, SetError] = useState< ErrorPros | null>(null)
+    // const [error, SetError] = useState< ErrorPros | null>(null)
     const router = useRouter();
     const GoggleRegister = async () => {
         const provider = new GoogleAuthProvider();
@@ -51,7 +51,7 @@ export default function Login() {
         <div className="flex justify-center items-center min-h-screen bg-black">
         <div className="flex flex-col gap-2.5 bg-[#1f1f1f] p-7 w-[450px] rounded-2xl font-sans">
             {/* Email Input */}
-            {error && <p>{error.message}</p>}
+            {/* {error && <p>{error.message}</p>} */}
             <div className="flex flex-col">
                 <label className="text-white font-semibold">Email</label>
             </div>
