@@ -48,6 +48,8 @@ export default function AllMovies ({isSidebarOpen}:props){
     const addToWishlist = (movieId: number) => {
         if (!wishlist.includes(movieId)) {
           setWishlist([...wishlist, movieId]);
+
+
           console.log(`Added movie ${movieId} to wishlist`);
         } else {
           console.log(`Movie ${movieId} is already in the wishlist`);
@@ -56,7 +58,7 @@ export default function AllMovies ({isSidebarOpen}:props){
 
     return(
         <section className="bg-black">
-        <div className={`p-5 ${isSidebarOpen ? 'lg:pl-[230px]' : 'pl-10'}`}>
+        <div className={`p-5 ${isSidebarOpen ? 'lg:pl-[230px]' : 'pl-10'}`} >
           <h1 className="text-white flex items-start mb-10 font-semibold">Movies</h1>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
             {movie.map((movie: Movie) => (

@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <MainLayout>
       <MovieCard isSidebarOpen={false}  />
-      {/* <MovieCardSeries isSidebarOpen={false}  /> */}
+      <MovieCardSeries isSidebarOpen={false}  />
     </MainLayout>
   );
 }
