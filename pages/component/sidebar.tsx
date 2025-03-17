@@ -46,7 +46,7 @@ export default function Sidebar() {
                 <li className="w-full">
                     <Link
                         className="text-gray-400 flex items-center p-3 rounded-lg hover:bg-gray-800 transition-all duration-300"
-                        href={''}
+                        href={'/wishlist'}
                     >
                         <FaHeart size={24} className="text-gray-400 mr-3" />
                         <span className="text-md">Wishlist</span>

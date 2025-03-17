@@ -11,9 +11,12 @@ import { FaEnvelope, FaLock, FaGoogle, } from 'react-icons/fa';
 
 
 
-
+interface ErrorPros  {
+    message: string;
+}
 export default function Login() {
-    const [error, SetError] = useState<string>('')
+
+    const [error, SetError] = useState< ErrorPros | null>(null)
     const router = useRouter();
     const GoggleRegister = async () => {
         const provider = new GoogleAuthProvider();
@@ -40,7 +43,7 @@ export default function Login() {
           
           router.push('/');
         } catch (error) {
-          SetError("An error occurred during sign-in. Please try again.", error);
+
           console.error("Error signing in:", error);
         }
       };
