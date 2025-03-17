@@ -29,7 +29,7 @@ export default function AllMovies ({isSidebarOpen}:props){
             try{
                 const res = await fetch("/api/movies");
                 const data = await res.json()
-                // console.log(data, "l");
+             
                 setMovie(data)
               
             }catch(error){
