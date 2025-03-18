@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import img from '../images/ii.png';
 import Image from "next/image";
-import {  FaDownload, FaHistory, FaSearch, FaTimes } from "react-icons/fa";
+import {   FaHistory, FaSearch, FaTimes } from "react-icons/fa";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { TbLogin2, TbLogout2 } from "react-icons/tb";
