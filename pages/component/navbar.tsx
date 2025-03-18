@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import img from '../images/ii.png';
 import Image from "next/image";
-import { FaDownload, FaHistory, FaSearch } from "react-icons/fa";
+import {  FaDownload, FaHistory, FaSearch, FaTimes } from "react-icons/fa";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { TbLogin2, TbLogout2 } from "react-icons/tb";
 import { GrFavorite } from "react-icons/gr";
 import Link from "next/link";
+import { CgMenuRight } from "react-icons/cg";
 type Props = {
     isSidebarOpen: boolean;
     setIsSidebarOpen: (isopen:boolean) => void
@@ -40,25 +41,31 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
                 {/* Hamburger and Logo */}
                 <div className="flex items-center space-x-4">
                     {/* Hamburger Menu */}
-                    <button 
-                        className="text-white focus:outline-none"
-                        onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-                    >
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            className="h-6 w-6" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
-                            stroke="currentColor"
-                        >
-                            <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                strokeWidth={2} 
-                                d="M4 6h16M4 12h16M4 18h16" 
-                            />
-                        </svg>
-                    </button>
+                   
+                    <label className="flex flex-col gap-2 w-8 cursor-pointer">
+      {/* Hidden checkbox to control the state */}
+      <input
+        type="checkbox"
+        className="peer hidden"
+        checked={isSidebarOpen}
+        onChange={() => setIsSidebarOpen(!isSidebarOpen)}
+      />
+
+      {/* Hamburger Icon */}
+      <CgMenuRight
+        className={` text-2xl transition-transform duration-500 ${
+          isSidebarOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
+        }`}
+      />
+
+      {/* Close Icon (X) */}
+      <FaTimes
+        className={` text-2xl absolute transition-transform duration-500 ${
+          isSidebarOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"
+        }`}
+      />
+    </label>
+
 
                     {/* Logo and App Name */}
                     <a href="#" className="flex items-center space-x-2">
@@ -100,7 +107,7 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
                  {user ?  
                     
                     <button
-                      className="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-transform duration-200 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring 
+                      className="hideen lg:block items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-transform duration-200 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring 
                       focus-visible:ring-offset-2 disabled:pointer-events-none 
                       disabled:opacity-50 group relative animate-rainbow
                        cursor-pointer border-0 
@@ -114,11 +121,11 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
                     </button>
                   
                  :
-                   <Link href="./login">
+                   <Link className="hidden lg:flex" href="./login">
    
   
                    <button
-                     className="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-transform duration-200 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group relative animate-rainbow cursor-pointer border-0 bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] bg-[length:200%] text-foreground [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.08*1rem)_solid_transparent] before:absolute before:bottom-[-20%] before:left-1/2 before:z-[0] before:h-[20%] before:w-[60%] before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] before:[filter:blur(calc(0.8*1rem))] dark:bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] hover:scale-105 active:scale-95 h-10 px-4 py-2 inline-flex"
+                     className=" items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-transform duration-200 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group relative animate-rainbow cursor-pointer border-0 bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] bg-[length:200%] text-foreground [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.08*1rem)_solid_transparent] before:absolute before:bottom-[-20%] before:left-1/2 before:z-[0] before:h-[20%] before:w-[60%] before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] before:[filter:blur(calc(0.8*1rem))] dark:bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] hover:scale-105 active:scale-95 h-10 px-4 py-2 inline-flex"
                    >
                      <div className="flex items-center">
                    <span> <TbLogin2 size={20} /></span>
@@ -129,7 +136,7 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
                    </Link>               
                 }
 
-<Link href='/wishlist'>
+<Link className="hidden lg:flex" href='/wishlist'>
             
 <button
   className="relative inline-flex h-10 active:scale-95 transistion overflow-hidden rounded-lg p-[1px] focus:outline-none"

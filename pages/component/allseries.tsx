@@ -1,8 +1,4 @@
 
-
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import Image from "next/image"
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -24,7 +20,7 @@ type props = {
     isSidebarOpen : boolean,
 }
 export default function TvShow ({isSidebarOpen}:props){
-    const [movies, setMovies] = useState<Movie>()
+    const [movies, setMovies] = useState<Movie[]>([])
    const [wishlist, setWishlist] = useState<number[]>([]); 
    const [isLoading, setIsLoading] = useState(true);
 

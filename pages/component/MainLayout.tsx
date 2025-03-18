@@ -1,7 +1,8 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 import React from "react";
+import Loader from "./loader";
 
 interface MainLayoutProps {
     children: ReactNode;
@@ -14,14 +15,26 @@ interface MainLayoutProps {
 export default function MainLayout({ children }: MainLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  // Pass isSidebarOpen to children
-//   const childrenWithProps = React.Children.map(children, (child) => {
-//     if (React.isValidElement(child)) {
-//       return React.cloneElement(child, { isSidebarOpen });
-//     }
-//     return child;
-//   });
-  // Pass isSidebarOpen to children
+  // Effect to set initial sidebar state based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      // Check if the screen width is greater than or equal to 1024px (lg breakpoint)
+      if (window.innerWidth >= 1024) {
+        setIsSidebarOpen(true); // Open sidebar on large screens
+      } else {
+        setIsSidebarOpen(false); // Close sidebar on small screens
+      }
+    };
+
+    // Set initial state on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement<ChildProps>(child)) {
       return React.cloneElement(child, { isSidebarOpen });
@@ -29,9 +42,22 @@ export default function MainLayout({ children }: MainLayoutProps) {
     return child;
   });
 
+  //
+    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => setLoading(false), 4000); // Adjust the delay as needed
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="">
+    <>
+       {loading ?(
+        <Loader />
+       ) : (
+      
+    
+       <div className="">
       <Navbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
       <div className="flex justify-between">
         <div className="flex-grow pt-20">{childrenWithProps}</div>
@@ -42,5 +68,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
         )}
       </div>
     </div>
+      )}
+    </>
+   
   );
 }

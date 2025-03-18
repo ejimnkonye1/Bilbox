@@ -20,7 +20,7 @@ type props = {
     isSidebarOpen : boolean,
 }
 export default function AllMovies ({isSidebarOpen}:props){
-    const [movies, setMovies] = useState<Movie>()
+    const [movies, setMovies] = useState<Movie[]>([])
    const [wishlist, setWishlist] = useState<number[]>([]); 
    const [isLoading, setIsLoading] = useState(true);
 
