@@ -42,14 +42,13 @@ export default function Register() {
 
             {/* Sign In Button */}
             <button className="mt-5 bg-[#2d79f3] text-white font-medium rounded-lg h-12 w-full cursor-pointer">
-                Sign In
-            </button>
+            Sign Up            </button>
 
             {/* Sign Up Link */}
             <p className="text-center text-white text-sm mt-2.5">
-                Don&apos;t have an account?{" "}
+                Already have an account?{" "}
                 <span className="text-[#2d79f3] font-medium cursor-pointer">
-                    Sign Up
+                    Sign In
                 </span>
             </p>
 

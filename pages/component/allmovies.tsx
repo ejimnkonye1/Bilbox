@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import MovieSkeleton from "../reuseable/skeleton";
 interface Movie {
     map: any;
     id:number,
@@ -19,9 +20,9 @@ type props = {
     isSidebarOpen : boolean,
 }
 export default function AllMovies ({isSidebarOpen}:props){
-    const [movie, setMovie] = useState<Movie>()
+    const [movies, setMovies] = useState<Movie>()
    const [wishlist, setWishlist] = useState<number[]>([]); 
-
+   const [isLoading, setIsLoading] = useState(true);
 
 
     useEffect(() => {
@@ -30,7 +31,10 @@ export default function AllMovies ({isSidebarOpen}:props){
                 const res = await fetch("/api/movies");
                 const data = await res.json()
              
-                setMovie(data)
+                setTimeout(() => {
+                  setMovies(data);
+                  setIsLoading(false); // Hide loading after 5 seconds
+                }, 5000);
               
             }catch(error){
                console.log(error, "Failed to get movies") 
@@ -41,9 +45,7 @@ export default function AllMovies ({isSidebarOpen}:props){
         getMovie();
 
     }, [])
-    if(!movie){
-        return<div>Loading.</div>
-    } 
+
     
     const addToWishlist = (movieId: number) => {
         if (!wishlist.includes(movieId)) {
@@ -60,8 +62,11 @@ export default function AllMovies ({isSidebarOpen}:props){
         <section className="bg-black">
         <div className={`p-5 ${isSidebarOpen ? 'lg:pl-[230px]' : 'pl-10'}`} >
           <h1 className="text-white flex items-start mb-10 font-semibold">Movies</h1>
+             {isLoading ? (
+                    <MovieSkeleton  />
+                  ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
-            {movie.map((movie: Movie) => (
+            {movies.map((movie: Movie) => (
               <div
                 key={movie.id}
                 className="rounded-lg overflow-hidden relative h-64" // Fixed height for the container
@@ -104,6 +109,7 @@ export default function AllMovies ({isSidebarOpen}:props){
               </div>
             ))}
           </div>
+               )}
         </div>
       </section>
     )
