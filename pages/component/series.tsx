@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import MovieSkeleton from "../reuseable/skeleton";
 interface Movie {
     map: any;
     id:number,
@@ -21,7 +22,7 @@ type props = {
 export default function MovieCardSeries ({isSidebarOpen}:props){
     const [movie, setMovie] = useState<Movie>()
    const [wishlist, setWishlist] = useState<number[]>([]); 
-
+   const [isLoading, setIsLoading] = useState(true);
 
 
     useEffect(() => {
@@ -29,7 +30,10 @@ export default function MovieCardSeries ({isSidebarOpen}:props){
             try{
                 const res = await fetch("/api/series");
                 const data = await res.json()
-                setMovie(data)
+                setTimeout(() => {
+                  setMovie(data);
+                  setIsLoading(false); // Hide loading after 5 seconds
+                }, 5000);
                 console.log(data.genres)
             }catch(error){
                console.log(error, "Failed to get movies") 
@@ -57,6 +61,9 @@ export default function MovieCardSeries ({isSidebarOpen}:props){
         <section className="bg-black">
                     <div className={`p-5 ${isSidebarOpen ? 'pl-[230px]':'pl-10'} `}>
             <h1 className="text-white flex items-start mb-10 font-semibold">Series</h1>
+                {isLoading ? (
+                      <MovieSkeleton  />
+                    ) : (
             <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 ">
           {movie.map((movie:Movie) => (
             <div key={movie.id} className=" rounded-lg overflow-hidden relative">
@@ -95,6 +102,7 @@ export default function MovieCardSeries ({isSidebarOpen}:props){
             </div>
           ))}
         </div>
+                    )}
             </div>
 
     

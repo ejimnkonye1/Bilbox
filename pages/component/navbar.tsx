@@ -68,7 +68,7 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
 
 
                     {/* Logo and App Name */}
-                    <a href="#" className="flex items-center space-x-2">
+                    <a href="#" className="flex hidden lg:flex items-center space-x-2">
                         <Image 
                             src={img.src}
                             alt="Logo"
@@ -96,7 +96,7 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
                 <div className="flex space-x-4">
                     {/* Download App Icon (Visible on Small Screens) */}
                     <button className="lg:hidden text-white">
-                        <FaDownload size={24} />
+                        <TbLogin2 size={24} />
                     </button>
 
                     {/* Watch History Icon (Visible on Small Screens) */}

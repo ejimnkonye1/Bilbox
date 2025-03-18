@@ -14,8 +14,14 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
 
-    {loading && <Loader />}
-    <Component {...pageProps} />
+    {loading ?(
+      <Loader />
+    ): (
+      <Component {...pageProps} />
+    )}
+    
+    
+   
     </>
   )
 

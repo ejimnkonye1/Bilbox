@@ -2,7 +2,6 @@ import { ReactNode, useEffect, useState } from "react";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 import React from "react";
-import Loader from "./loader";
 
 interface MainLayoutProps {
     children: ReactNode;
@@ -42,19 +41,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
     return child;
   });
 
-  //
-    const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => setLoading(false), 4000); // Adjust the delay as needed
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <>
-       {loading ?(
-        <Loader />
-       ) : (
       
     
        <div className="">
@@ -68,7 +57,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         )}
       </div>
     </div>
-      )}
+  
     </>
    
   );
