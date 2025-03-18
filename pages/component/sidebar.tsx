@@ -43,7 +43,7 @@ export default function Sidebar() {
     const Firstletter = Slice?.toUpperCase()
     return (
 
-        <div className="fixed inset-0 bg-black lg:w-[18%] w-70 p-8 border-r  transform transition-transform duration-300 ease-in-out">
+        <div className="fixed inset-0 bg-black lg:w-[18%] w-70 p-8   transform transition-transform duration-300 ease-in-out">
             {/* Sidebar Menu */}
             <ul className="flex flex-col justify-start items-start lg:pt-20 pt-30 space-y-2">
                 <li className="w-full">
