@@ -1,6 +1,6 @@
 
-import { auth, firestore } from "@/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import {  firestore } from "@/firebase";
+
 import { collection, doc, setDoc } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
+import { useUser } from "../context/usercontext";
 
 interface Movie {
   id: number;
@@ -24,33 +25,14 @@ type Props = {
   isSidebarOpen: boolean;
 };
 
-type User = {
-  id: string;
-  email: string;
-};
 
 export default function MovieCard({ isSidebarOpen }: Props) {
   const [movies, setMovies] = useState<Movie[]>([]); // Fixed state to be an array
   const [wishlist, setWishlist] = useState<Movie[]>([]);
-  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  // Handle Firebase Authentication
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser({
-          id: currentUser.uid,
-          email: currentUser.email || "",
-        });
-      } else {
-        setUser(null);
-      }
-    });
+  
+ const {user} = useUser()
 
-    return () => unsubscribe();
-  }, []);
-
-  // Fetch Movies from API
   useEffect(() => {
     const getMovies = async () => {
       try {

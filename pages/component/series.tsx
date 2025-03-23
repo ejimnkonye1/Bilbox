@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Image from "next/image"
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, firestore } from "@/firebase";
+
+import {  firestore } from "@/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore/lite";
+import { useUser } from "../context/usercontext";
 interface Movie {
     id:number,
     title: string,
@@ -22,31 +22,14 @@ interface Movie {
 type props = {
     isSidebarOpen : boolean,
 }
-type User = {
-  id: string;
-  email: string;
-};
+
 
 export default function MovieCardSeries ({isSidebarOpen}:props){
     const [movies, setMovie] = useState<Movie[]>([])
    const [wishlist, setWishlist] = useState<Movie[]>([]); 
    const [isLoading, setIsLoading] = useState(true);
- const [user, setUser] = useState<User | null>(null);
-
-   useEffect(() => {
-     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-       if (currentUser) {
-         setUser({
-           id: currentUser.uid,
-           email: currentUser.email || "",
-         });
-       } else {
-         setUser(null);
-       }
-     });
+ const {user} = useUser()
  
-     return () => unsubscribe();
-   }, []);
     useEffect(() => {
         const getMovie = async () => {
             try{

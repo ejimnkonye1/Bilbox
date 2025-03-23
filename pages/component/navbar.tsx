@@ -1,39 +1,21 @@
-import { useEffect, useState } from "react";
+
 import img from '../images/ii.png';
 import Image from "next/image";
 import {   FaHistory, FaSearch, FaTimes } from "react-icons/fa";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/firebase";
+
 import { TbLogin2, TbLogout2 } from "react-icons/tb";
 import { GrFavorite } from "react-icons/gr";
 import Link from "next/link";
 import { CgMenuRight } from "react-icons/cg";
+import { useUser } from "../context/usercontext";
 type Props = {
     isSidebarOpen: boolean;
     setIsSidebarOpen: (isopen:boolean) => void
   };
-type User = {
-    id: string;
-    email: string;
-  };
+
 export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
+ const {user} = useUser()
 
-    const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser({
-          id: currentUser.uid,
-          email: currentUser.email || "",
-        });
-      } else {
-        setUser(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
     return (
         <>
             {/* Main Navbar */}

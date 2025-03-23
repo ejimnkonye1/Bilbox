@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, firestore } from "@/firebase";
+import {  firestore } from "@/firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
+import { useUser } from "../context/usercontext";
 interface Movie {
     map: any;
     id:number,
@@ -22,30 +22,13 @@ interface Movie {
 type props = {
     isSidebarOpen : boolean,
 }
-type User = {
-  id: string;
-  email: string;
-};
+
 export default function AllMovies ({isSidebarOpen}:props){
     const [movies, setMovies] = useState<Movie[]>([])
    const [wishlist, setWishlist] = useState<Movie[]>([]); 
    const [isLoading, setIsLoading] = useState(true);
-   const [user, setUser] = useState<User | null>(null);
-
-   useEffect(() => {
-     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-       if (currentUser) {
-         setUser({
-           id: currentUser.uid,
-           email: currentUser.email || "",
-         });
-       } else {
-         setUser(null);
-       }
-     });
- 
-     return () => unsubscribe();
-   }, []);
+   const {user} = useUser()
+  
 
     useEffect(() => {
         const getMovie = async () => {

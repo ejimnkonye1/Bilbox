@@ -8,36 +8,17 @@ import {
     FaDragon,
   
 } from "react-icons/fa";
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "@/firebase";
-type User = {
-    id: string;
-    email: string;
-  };
+
+import { useUser } from "../context/usercontext";
+
   
 export default function Sidebar() {
     const pathname = usePathname(); // Get the current route
 
     // Function to check if the link is active
     const isActive = (path:string) => pathname === path;
-    const [user, setUser] = useState<User | null>(null);
-
-    // Handle Firebase Authentication
-    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        if (currentUser) {
-          setUser({
-            id: currentUser.uid,
-            email: currentUser.email || "",
-          });
-        } else {
-          setUser(null);
-        }
-      });
+  const {user} = useUser()
   
-      return () => unsubscribe();
-    }, []);
     const ShortLetter = user?.email || "Guest"
      const Slice =  ShortLetter.slice(0,1) 
     const Firstletter = Slice?.toUpperCase()

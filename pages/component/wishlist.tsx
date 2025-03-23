@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 // Ensure you have authentication context
 import Image from "next/image"; // Import Next.js Image component
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, firestore } from "@/firebase";
+
+import {  firestore } from "@/firebase";
 import MovieSkeleton from "../reuseable/skeleton";
+import { useUser } from "../context/usercontext";
 
 interface Movie {
   id: number;
@@ -14,33 +15,18 @@ interface Movie {
   poster_path: string;
   vote_average: number;
 }
-type User = {
-    id: string;
-    email: string;
-  };
+
   type props = {
     isSidebarOpen : boolean,
 }
 export default function Wishlist  ({isSidebarOpen}:props)  {
-  const [user, setUser] = useState<User | null>(null);
+  
+ const {user} = useUser()
 
   const [wishlist, setWishlist] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser({
-          id: currentUser.uid,
-          email: currentUser.email || "",
-        });
-      } else {
-        setUser(null);
-      }
-    });
 
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     if (!user) return;
