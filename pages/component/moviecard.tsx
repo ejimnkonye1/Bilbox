@@ -84,7 +84,7 @@ export default function MovieCard({ isSidebarOpen }: Props) {
                   }`}
                 />
               </button>
-              <div className="absolute lg:top-53 top-2 left-2 lg:right-2 bg-black bg-opacity-10 text-white text-sm font-bold px-2 py-1 rounded-md">
+              <div className="absolute lg:top-53 top-30 right-2 bg-black bg-opacity-10 text-white text-sm font-bold px-2 py-1 rounded-md">
 
 <p className="text-yellow-600 text-sm font-bold relative">
   {movie.vote_average.toFixed(1)}

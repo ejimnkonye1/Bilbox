@@ -66,7 +66,12 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
                         <input 
                             type="search"
                             placeholder="Search Movies/Tv Shows"
-                            className="w-[50%] px-10 py-3  bg-gray-800  rounded-lg text-sm  text-white focus:outline-none  placeholder-gray-400"
+                            // className="w-[50%] px-10 py-3  bg-gray-800  rounded-lg text-sm  text-white focus:outline-none  placeholder-gray-400"
+                            className=" text-white focus:outline-none  placeholder-gray-400 
+                            w-[50%] px-10 py-3 items-center justify-center whitespace-nowrap rounded-full
+                             text-sm font-medium      cursor-pointer border-0 bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] bg-[length:200%]
+                              text-foreground [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.08*1rem)_solid_transparent] before:absolute before:bottom-[-20%] before:left-1/2 before:z-[0] before:h-[20%] before:w-[60%] before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] before:[filter:blur(calc(0.8*1rem))] dark:bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] 
+                               h-10 px-4 py-2 inline-flex"
                         />
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <FaSearch size={18} className="text-gray-400" />
@@ -125,7 +130,7 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
 >
   <span
     className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite]
-     bg-[conic-gradient(from_90deg_at_50%_50%,#e7029a_0%,#f472b6_50%,#bd5f_100%)]"
+     bg-[conic-gradient(from_90deg_at_50%_50%,#e7029a_0%,#f472b6_50%,#bd5f_100%)] "
   >
   </span>
   <span
@@ -146,7 +151,11 @@ export default function Navbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
                     <input 
                         type="search"
                         placeholder="Movies/Series"
-                        className="w-full px-10 py-3 bg-gray-800  rounded-lg text-sm  text-white  placeholder-gray-400"
+                        className=" text-white focus:outline-none  placeholder-gray-400 
+                        w-full px-10 py-3 items-center justify-center whitespace-nowrap rounded-full
+                         text-sm font-medium      cursor-pointer border-0 bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] bg-[length:200%]
+                          text-foreground [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.08*1rem)_solid_transparent] before:absolute before:bottom-[-20%] before:left-1/2 before:z-[0] before:h-[20%] before:w-[60%] before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] before:[filter:blur(calc(0.8*1rem))] dark:bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,hsl(0,100%,63%),hsl(90,100%,63%),hsl(210,100%,63%),hsl(195,100%,63%),hsl(270,100%,63%))] 
+                           h-10 px-4 py-2 inline-flex"
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <FaSearch size={18} className="text-gray-400" />
