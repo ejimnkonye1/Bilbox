@@ -1,14 +1,11 @@
 
-import {  firestore } from "@/firebase";
-
-import { collection, doc, setDoc } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
-
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
 import { useUser } from "../context/usercontext";
+import { useWishlist } from "../context/WishlistContext";
 
 interface Movie {
   id: number;
@@ -28,10 +25,11 @@ type Props = {
 
 export default function MovieCard({ isSidebarOpen }: Props) {
   const [movies, setMovies] = useState<Movie[]>([]); // Fixed state to be an array
-  const [wishlist, setWishlist] = useState<Movie[]>([]);
+  
   const [isLoading, setIsLoading] = useState(true);
   
  const {user} = useUser()
+ const { wishlist, addToWishlist } = useWishlist(); // Access wishlist and function
 
   useEffect(() => {
     const getMovies = async () => {
@@ -52,38 +50,7 @@ export default function MovieCard({ isSidebarOpen }: Props) {
   }, []);
 
 
-  const addToWishlist = async (selectedMovie: Movie) => {
-    if (!user) {
-      alert("Log in to add movie to wishlist");
-      return;
-    }
-    const movieRef = doc(collection(firestore, "wishlist", user.id, "movies"), `${selectedMovie.id}`); 
 
-    //check if movie is already in wishlist
- const alreadyWhishlist = wishlist.some((item) => item.id === selectedMovie.id )
- if (!alreadyWhishlist){
-  try {
-    await setDoc(movieRef, {
-      userId: user.id,
-      movieId: selectedMovie.id,
-      title: selectedMovie.title,
-      poster_path: selectedMovie.poster_path,
-      vote_average: selectedMovie.vote_average,
-
-
-    })
-    setWishlist([...wishlist , selectedMovie])
-    console.log(`Added ${selectedMovie.title} to wishlist`);
-  } catch(error){
-    console.log(error)
-  }
-
-
- } else{
-  console.log(`${selectedMovie.title} is already in the wishlist`);
- }
-
-  };
 
   return (
     <section className="bg-black">

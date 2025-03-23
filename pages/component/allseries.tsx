@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
+import { useWishlist } from "../context/WishlistContext";
 
 interface Movie {
 
@@ -21,9 +22,8 @@ type props = {
 }
 export default function TvShow ({isSidebarOpen}:props){
     const [movies, setMovies] = useState<Movie[]>([])
-   const [wishlist, setWishlist] = useState<number[]>([]); 
    const [isLoading, setIsLoading] = useState(true);
-
+ const { wishlist, addToWishlist } = useWishlist(); 
 
     useEffect(() => {
         const getMovie = async () => {
@@ -34,7 +34,7 @@ export default function TvShow ({isSidebarOpen}:props){
                   setMovies(data);
                   setIsLoading(false); // Hide loading after 5 seconds
                 }, 5000);
-                console.log(data.genres)
+           
             }catch(error){
                console.log(error, "Failed to get movies") 
             }
@@ -46,14 +46,7 @@ export default function TvShow ({isSidebarOpen}:props){
     }, [])
 
     
-    const addToWishlist = (movieId: number) => {
-        if (!wishlist.includes(movieId)) {
-          setWishlist([...wishlist, movieId]);
-          console.log(`Added movie ${movieId} to wishlist`);
-        } else {
-          console.log(`Movie ${movieId} is already in the wishlist`);
-        }
-      };
+   
 
     return(
    
@@ -77,13 +70,13 @@ export default function TvShow ({isSidebarOpen}:props){
   
         
               <button
-                onClick={() => addToWishlist(movie.id)}
+                onClick={() => addToWishlist(movie)}
                 className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
                 aria-label="Add to wishlist"
               >
-                <FaHeart
+                  <FaHeart
                   className={`text-lg ${
-                    wishlist.includes(movie.id) ? "text-red-500" : "text-gray-500"
+                    wishlist.some((item) => item.id === movie.id) ? "text-red-500" : "text-gray-500"
                   }`}
                 />
               </button>

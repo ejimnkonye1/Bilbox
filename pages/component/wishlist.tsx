@@ -1,20 +1,14 @@
 "use client"; // Ensures it runs on the client side
 
-import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import {  useState } from "react";
+
 // Ensure you have authentication context
 import Image from "next/image"; // Import Next.js Image component
 
-import {  firestore } from "@/firebase";
 import MovieSkeleton from "../reuseable/skeleton";
 import { useUser } from "../context/usercontext";
+import { useWishlist } from "../context/WishlistContext";
 
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-}
 
   type props = {
     isSidebarOpen : boolean,
@@ -22,36 +16,15 @@ interface Movie {
 export default function Wishlist  ({isSidebarOpen}:props)  {
   
  const {user} = useUser()
+ const { wishlist,  } = useWishlist(); // Access wishlist and function
 
-  const [wishlist, setWishlist] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
 
+setTimeout(() => {
+  setLoading(false)
+}, 2000);
 
-  useEffect(() => {
-    if (!user) return;
-
-    const fetchWishlist = async () => {
-      setLoading(true);
-      try {
-        const querySnapshot = await getDocs(collection(firestore, "wishlist", user.id, "movies"));
-        const movies: Movie[] = querySnapshot.docs.map((doc) => ({
-          id: doc.data().movieId,
-          title: doc.data().title,
-          poster_path: doc.data().poster_path,
-          vote_average: doc.data().vote_average,
-        }));
-        
-        setWishlist(movies);
-      } catch (error) {
-        console.error("Error fetching wishlist:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWishlist();
-  }, [user]);
 
 
   if (!user) {
