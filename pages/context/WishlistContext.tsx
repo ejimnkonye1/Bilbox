@@ -7,6 +7,7 @@ import { useUser } from "./usercontext";
 interface Movie {
   id: number;
   title: string;
+  name:string
   poster_path: string;
   vote_average: number;
 }
@@ -20,7 +21,7 @@ const WishlistContext = createContext<WishlistContextType | null>(null);
 
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [wishlist, setWishlist] = useState<Movie[]>([]);
-  const { user } = useUser(); // Get logged-in user
+  const { user } = useUser(); 
 
   // Fetch wishlist from Firestore on load
   useEffect(() => {
@@ -57,18 +58,18 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
         await setDoc(movieRef, {
           userId: user.id,
           movieId: selectedMovie.id,
-          title: selectedMovie.title,
+          title: selectedMovie.title || selectedMovie.name,
           poster_path: selectedMovie.poster_path,
           vote_average: selectedMovie.vote_average,
         });
 
         setWishlist([...wishlist, selectedMovie]);
-        console.log(`Added ${selectedMovie.title} to wishlist`);
+        console.log(`Added ${selectedMovie.title || selectedMovie.name} to wishlist`);
       } catch (error) {
         console.error("Error adding to wishlist:", error);
       }
     } else {
-      console.log(`${selectedMovie.title} is already in the wishlist`);
+      console.log(`${selectedMovie.title || selectedMovie.name} is already in the wishlist`);
     }
   };
 

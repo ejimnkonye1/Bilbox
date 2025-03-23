@@ -10,6 +10,7 @@ interface Movie {
 
     id:number,
     title: string,
+    name: string
     backdrop_path: string,
     poster_path: string;
     overview:string,
@@ -83,9 +84,9 @@ export default function TvShow ({isSidebarOpen}:props){
   
               <div className="p-4">
               <Link href={`/${movie.id}`}>
-                <h6 className="text-sm mb-2 text-white">{movie.title}</h6>
+                <h6 className="text-sm mb-2 text-white">{movie.name}</h6>
                 </Link>
-                <div className="flex absolute bottom-10 right-2">
+                <div className="flex absolute bottom-25 right-2">
                   <p className="text-yellow-600 text-lg font-bold relative ">
                  {movie.vote_average.toFixed(1)}
                   </p>

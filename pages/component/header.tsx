@@ -4,35 +4,31 @@ import { PiTelevisionDuotone } from "react-icons/pi";
 import { MdArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/router";
 
-export default function Header () {
-   const router = useRouter()
+export default function Header() {
+  const router = useRouter();
 
-   const handleBack = () => {
-    router.push('/')
+  const handleBack = () => {
+    router.push("/");
+  };
 
-   }
-    return(
-        <nav className="navbar ">
-        <div className="container flex justify-between items-center px-10">
-          <div className='icon-head w-[40px] h-[40px] border-2-[#89c5f1]  bg-[#89c5f1] flex justify-center items-center rounded-[20%] overflow-hidden'>
-              
-          <MdArrowBackIos className='' onClick={handleBack}/>
-         
-          </div>
-        
-         <div className='flex'>
-         <div className="icon-head m-2  w-[40px] h-[40px] border-2-[#89c5f1]  bg-[#89c5f1] flex justify-center items-center rounded-[20%] overflow-hidden" >
-                  <LuPlus className='plus-icon' />
-                </div>
-                <div className="icon-head m-2  w-[40px] h-[40px] border-2-[#89c5f1]  bg-[#89c5f1] flex justify-center items-center rounded-[20%] overflow-hidden">
-                    <PiTelevisionDuotone className='tv' />
-                  </div>
-         </div>
-         
-      
+  return (
+    <nav className="fixed top-0 left-0 w-full z-50  h-[60px] md:h-[70px] flex items-center px-6 md:px-10">
+      <div className="container flex justify-between items-center w-full">
+        {/* Back Button */}
+        <div className="w-9 h-9 md:w-10 md:h-10 flex justify-center items-center rounded-full bg-[#89c5f1] cursor-pointer">
+          <MdArrowBackIos className="text-white text-sm md:text-lg" onClick={handleBack} />
         </div>
-      </nav>
 
-    )
- 
+        {/* Icons */}
+        <div className="flex gap-3">
+          <div className="w-9 h-9 md:w-10 md:h-10 flex justify-center items-center rounded-full bg-[#89c5f1]">
+            <LuPlus className="text-white text-sm md:text-lg" />
+          </div>
+          <div className="w-9 h-9 md:w-10 md:h-10 flex justify-center items-center rounded-full bg-[#89c5f1]">
+            <PiTelevisionDuotone className="text-white text-sm md:text-lg" />
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
 }

@@ -4,14 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
-
-import {  firestore } from "@/firebase";
-import { doc, setDoc } from "firebase/firestore";
-import { collection } from "firebase/firestore/lite";
-import { useUser } from "../context/usercontext";
+import { useWishlist } from "../context/WishlistContext";
 interface Movie {
     id:number,
     title: string,
+    name: string
     backdrop_path: string,
     poster_path: string;
     overview:string,
@@ -26,10 +23,8 @@ type props = {
 
 export default function MovieCardSeries ({isSidebarOpen}:props){
     const [movies, setMovie] = useState<Movie[]>([])
-   const [wishlist, setWishlist] = useState<Movie[]>([]); 
    const [isLoading, setIsLoading] = useState(true);
- const {user} = useUser()
- 
+    const { wishlist, addToWishlist } = useWishlist(); 
     useEffect(() => {
         const getMovie = async () => {
             try{
@@ -37,9 +32,10 @@ export default function MovieCardSeries ({isSidebarOpen}:props){
                 const data = await res.json()
                 setTimeout(() => {
                   setMovie(data);
+                  console.log("Fetched series data:", data);
                   setIsLoading(false); // Hide loading after 5 seconds
                 }, 5000);
-                console.log(data.genres)
+              
             }catch(error){
                console.log(error, "Failed to get movies") 
             }
@@ -50,39 +46,7 @@ export default function MovieCardSeries ({isSidebarOpen}:props){
 
     }, [])
 
-    
-    const addToWishlist = async (selectedMovie: Movie) => {
-      if (!user) {
-        alert("Log in to add movie to wishlist");
-        return;
-      }
-      const movieRef = doc(collection(firestore, "wishlist", user.id, "movies"), `${selectedMovie.id}`); 
-  
-      //check if movie is already in wishlist
-   const alreadyWhishlist = wishlist.some((item) => item.id === selectedMovie.id )
-   if (!alreadyWhishlist){
-    try {
-      await setDoc(movieRef, {
-        userId: user.id,
-        movieId: selectedMovie.id,
-        title: selectedMovie.title,
-        poster_path: selectedMovie.poster_path,
-        vote_average: selectedMovie.vote_average,
-  
-  
-      })
-      setWishlist([...wishlist , selectedMovie])
-      console.log(`Added ${selectedMovie.title} to wishlist`);
-    } catch(error){
-      console.log(error)
-    }
-  
-  
-   } else{
-    console.log(`${selectedMovie.title} is already in the wishlist`);
-   }
-  
-    };
+
 
     return(
         <section className="bg-black">
@@ -105,7 +69,10 @@ export default function MovieCardSeries ({isSidebarOpen}:props){
   
         
               <button
-                onClick={() => addToWishlist(movie)}
+                onClick={() => {
+                  console.log("Trying to add:", movie);
+                
+                  addToWishlist(movie)}}
                 className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
                 aria-label="Add to wishlist"
               >
@@ -118,10 +85,10 @@ export default function MovieCardSeries ({isSidebarOpen}:props){
   
               <div className="p-4">
               <Link href={`/${movie.id}`}>
-                <h6 className="text-sm mb-2 text-white">{movie.title}</h6>
+                <h6 className="text-sm mb-2 text-white">{movie.name}</h6>
                 </Link>
-                <div className="flex absolute bottom-10 right-2">
-                  <p className="text-yellow-600 text-lg font-bold relative ">
+                <div className="absolute top-53 right-2 bg-black bg-opacity-10 text-white text-sm font-bold px-2 py-1 rounded-md">
+                  <p className="text-yellow-600 text-sm font-bold relative ">
                  {movie.vote_average.toFixed(1)}
                   </p>
                 </div>

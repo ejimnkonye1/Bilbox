@@ -10,6 +10,7 @@ import { useWishlist } from "../context/WishlistContext";
 interface Movie {
   id: number;
   title: string;
+  name: string
   backdrop_path: string;
   poster_path: string;
   overview: string;
@@ -29,7 +30,7 @@ export default function MovieCard({ isSidebarOpen }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   
  const {user} = useUser()
- const { wishlist, addToWishlist } = useWishlist(); // Access wishlist and function
+ const { wishlist, addToWishlist } = useWishlist(); 
 
   useEffect(() => {
     const getMovies = async () => {
@@ -83,16 +84,17 @@ export default function MovieCard({ isSidebarOpen }: Props) {
                   }`}
                 />
               </button>
+              <div className="absolute lg:top-53 top-2 left-2 lg:right-2 bg-black bg-opacity-10 text-white text-sm font-bold px-2 py-1 rounded-md">
 
-              <div className="p-4">
+<p className="text-yellow-600 text-sm font-bold relative">
+  {movie.vote_average.toFixed(1)}
+</p>
+</div>
+              <div className="lg:p-4">
                 <Link href={`/${movie.id}`}>
-                  <h6 className="text-sm mb-2 text-white">{movie.title}</h6>
+                  <h6 className="text-sm mb-2  text-white">{movie.title}</h6>
                 </Link>
-                <div className="flex absolute bottom-25 right-2">
-                  <p className="text-yellow-600 text-lg font-bold relative">
-                    {movie.vote_average.toFixed(1)}
-                  </p>
-                </div>
+            
               </div>
             </div>
           ))}
