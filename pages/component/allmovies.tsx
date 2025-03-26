@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Image from "next/image"
 import Link from "next/link";
@@ -8,7 +7,6 @@ import MovieSkeleton from "../reuseable/skeleton";
 
 import { useWishlist } from "../context/WishlistContext";
 interface Movie {
-    map: any;
     id:number,
     title: string,
     name: string

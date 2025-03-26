@@ -22,8 +22,6 @@ const WishlistContext = createContext<WishlistContextType | null>(null);
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [wishlist, setWishlist] = useState<Movie[]>([]);
   const { user } = useUser(); 
-
-  // Fetch wishlist from Firestore on load
   useEffect(() => {
     if (!user) return;
 

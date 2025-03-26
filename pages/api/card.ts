@@ -5,8 +5,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req:NextApiRequest, res:NextApiResponse){
     try {
 
-  
-// const apiKey = '1a4ccc89abfa206e97d2fc3f73b1e3e2';
  const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.ApiKey}&page=4`);
  if(!response.ok){
     throw new Error("Failed to get movie")
