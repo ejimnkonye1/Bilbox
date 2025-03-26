@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
 
-import { useWishlist } from "../context/WishlistContext";
+import { useWishlist } from "../../context/WishlistContext";
 interface Movie {
     id:number,
     title: string,

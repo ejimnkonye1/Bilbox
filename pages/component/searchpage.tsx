@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
-import { useWishlist } from "../context/WishlistContext";
+import { useWishlist } from "../../context/WishlistContext";
 import MovieSkeleton from "../reuseable/skeleton";
 
 
@@ -25,13 +25,13 @@ interface Movie {
 export default function SearchPage ({isSidebarOpen,searchQuery}:props){
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-//   const [searchQuery, setSearchQuery] = useState("");
+
  const { wishlist, addToWishlist } = useWishlist(); 
   useEffect(() => {
 
     const getMovies = async () => {
       try {
-        const res = await fetch("/api/card"); // Fetch movie data
+        const res = await fetch("/api/search"); // Fetch movie data
         const data = await res.json();
         setMovies(data);
       } catch (error) {
@@ -46,7 +46,9 @@ export default function SearchPage ({isSidebarOpen,searchQuery}:props){
 
   // Filter movies based on search query
   const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    movie.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  movie.name?.toLowerCase().includes(searchQuery.toLowerCase())
+
   );
 
   return (
@@ -54,13 +56,7 @@ export default function SearchPage ({isSidebarOpen,searchQuery}:props){
     <div className={`p-5 ${isSidebarOpen ? 'lg:pl-[230px]' : 'pl-10'}`} >
       <h1 className="text-white flex items-start mb-10 font-semibold">Movies</h1>
     <div className="p-4">
-      {/* <input
-        type="text"
-        placeholder="Search for a movie..."
-        className="border p-2 rounded w-full mb-4"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      /> */}
+  
 
       {isLoading ? (
         <MovieSkeleton  />
@@ -106,7 +102,7 @@ export default function SearchPage ({isSidebarOpen,searchQuery}:props){
         </div>
       ) : (
         <p className="text-white text-center">
-        No movies found for &quot;<span className="font-bold">{searchQuery}</span>"
+        No movies found for &quot;<span className="font-bold">{searchQuery}</span>&quot;
       </p>
       )}
     </div>

@@ -6,8 +6,8 @@ import {  useState } from "react";
 import Image from "next/image"; // Import Next.js Image component
 
 import MovieSkeleton from "../reuseable/skeleton";
-import { useUser } from "../context/usercontext";
-import { useWishlist } from "../context/WishlistContext";
+import { useUser } from "../../context/usercontext";
+import { useWishlist } from "../../context/WishlistContext";
 
 
   type props = {

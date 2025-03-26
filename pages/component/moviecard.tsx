@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import MovieSkeleton from "../reuseable/skeleton";
-import { useUser } from "../context/usercontext";
-import { useWishlist } from "../context/WishlistContext";
+import { useUser } from "../../context/usercontext";
+import { useWishlist } from "../../context/WishlistContext";
 
 interface Movie {
   id: number;
