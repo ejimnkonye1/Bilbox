@@ -82,16 +82,19 @@ export default function TvShow ({isSidebarOpen}:props){
                 />
               </button>
   
-              <div className="p-4">
-              <Link href={`/${movie.id}`}>
-                <h6 className="text-sm mb-2 text-white">{movie.name}</h6>
-                </Link>
-                <div className="flex absolute bottom-25 right-2">
-                  <p className="text-yellow-600 text-lg font-bold relative ">
-                 {movie.vote_average.toFixed(1)}
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-75">
+                  <Link href={`/${movie.id}`}>
+                    <h6 className="text-sm text-white">{movie.name}</h6>
+                  </Link>
+                </div>
+
+
+                <div className="absolute top-2 left-2 p-1  bg-opacity-75 rounded">
+                  <p className="text-yellow-600 text-sm font-bold">
+                    {movie.vote_average.toFixed(1)}
                   </p>
                 </div>
-              </div>
+              
             </div>
           ))}
         </div>
