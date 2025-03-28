@@ -3,11 +3,10 @@ import { firestore } from "@/firebase";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { useUser } from "./usercontext";
 
-
 interface Movie {
   id: number;
   title: string;
-  name:string
+  name: string;
   poster_path: string;
   vote_average: number;
 }
@@ -21,7 +20,24 @@ const WishlistContext = createContext<WishlistContextType | null>(null);
 
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [wishlist, setWishlist] = useState<Movie[]>([]);
-  const { user } = useUser(); 
+  const { user } = useUser();
+
+  // Load local storage wishlist immediately
+  useEffect(() => {
+    const storedWishlist = localStorage.getItem("wishlist");
+    if (storedWishlist) {
+      setWishlist(JSON.parse(storedWishlist));
+    }
+  }, []);
+
+  // Sync wishlist to local storage on change
+  useEffect(() => {
+    if (wishlist.length > 0) {
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    }
+  }, [wishlist]);
+
+  // Fetch wishlist from Firestore & merge with local storage
   useEffect(() => {
     if (!user) return;
 
@@ -30,7 +46,12 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
         const wishlistRef = collection(firestore, "wishlist", user.id, "movies");
         const snapshot = await getDocs(wishlistRef);
         const movies = snapshot.docs.map((doc) => doc.data() as Movie);
-        setWishlist(movies);
+
+        setWishlist((prevWishlist) => {
+          const mergedWishlist = [...new Map([...prevWishlist, ...movies].map(item => [item.id, item])).values()];
+          localStorage.setItem("wishlist", JSON.stringify(mergedWishlist));
+          return mergedWishlist;
+        });
       } catch (error) {
         console.error("Error fetching wishlist:", error);
       }
@@ -61,7 +82,13 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
           vote_average: selectedMovie.vote_average,
         });
 
-        setWishlist([...wishlist, selectedMovie]);
+        // Update wishlist state immediately
+        setWishlist((prevWishlist) => {
+          const updatedWishlist = [...prevWishlist, selectedMovie];
+          localStorage.setItem("wishlist", JSON.stringify(updatedWishlist)); // Save updated wishlist
+          return updatedWishlist;
+        });
+
         console.log(`Added ${selectedMovie.title || selectedMovie.name} to wishlist`);
       } catch (error) {
         console.error("Error adding to wishlist:", error);
