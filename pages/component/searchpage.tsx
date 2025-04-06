@@ -5,8 +5,6 @@ import { FaHeart } from "react-icons/fa";
 import { useWishlist } from "../../context/WishlistContext";
 import MovieSkeleton from "../reuseable/skeleton";
 
-
-
 interface Movie {
     id: number;
     title: string;
@@ -16,7 +14,7 @@ interface Movie {
     overview: string;
     runtime?: number;
     vote_average: number;
-    genres: { id: number; name: string }[]; // Corrected type
+    genres: { id: number; name: string }[]; 
   }
   type props = {
     isSidebarOpen : boolean,

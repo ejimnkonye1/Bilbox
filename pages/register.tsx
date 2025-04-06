@@ -1,5 +1,39 @@
 import { FaEnvelope, FaLock, FaGoogle, } from 'react-icons/fa';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { useRouter } from 'next/router';
+import { auth, firestore } from '@/firebase';
 export default function Register() {
+       const router = useRouter();
+        const GoggleRegister = async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+              const userCredential = await signInWithPopup(auth, provider);
+              const user = userCredential.user;
+              const userId = user.uid;
+          
+             
+              const userDocRef = doc(firestore, "users", userId); 
+              const userDoc = await getDoc(userDocRef); 
+          
+              if (!userDoc.exists()) {
+        
+                await setDoc(userDocRef, {
+                  email: user.email,
+                  userId,
+                });
+                console.log("User  data saved to Firestore");
+              } else {
+                console.log("User  already exists in Firestore");
+              }
+          
+              
+              router.push('/');
+            } catch (error) {
+    
+              console.error("Error signing in:", error);
+            }
+          };
     return (
         <div className="flex justify-center items-center min-h-screen bg-black">
         <div className="flex flex-col gap-2.5 bg-[#1f1f1f] p-7 w-[450px] rounded-2xl font-sans">
