@@ -102,7 +102,9 @@ export default function Register() {
                 </button>
             </div> */}
             <div className="flex gap-2.5">
-            <button className="flex justify-center items-center gap-2.5 w-full h-12 rounded-lg border border-[#333] bg-[#2b2b2b] text-white font-medium cursor-pointer transition-all duration-200 hover:border-[#2d79f3]">
+            <button 
+            onClick={GoggleRegister}
+            className="flex justify-center items-center gap-2.5 w-full h-12 rounded-lg border border-[#333] bg-[#2b2b2b] text-white font-medium cursor-pointer transition-all duration-200 hover:border-[#2d79f3]">
             <FaGoogle size={20} />
             Continue with Google
         </button>
